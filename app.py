@@ -1,5 +1,5 @@
 from flask import Flask, url_for
-app = Flask(__name__, instance_relative_config=True)
+app = Flask(__name__)
 
 class DefaultConfiguration():
 	APPLICATION_ROOT = "/"
