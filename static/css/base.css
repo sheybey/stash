@@ -10,10 +10,11 @@ header {
 	margin: 2em 0;
 	font-size: 120%;
 }
-header a {
+header a:last-child {
 	float: right;
 }
 
 textarea {
 	width: 100%;
+	height: 400px;
 }

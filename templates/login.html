@@ -1,9 +1,9 @@
 {% extends "base.html" %}
-{% block title %}Login{% endblock %}
+{% block title %}Log in{% endblock %}
 {% block content %}
 	<p>{{ secret }}</p>
 	<form action="login" method="POST">
-		<p><textarea rows="80" name="signature" required></textarea></p>
+		<p><textarea name="signature" required></textarea></p>
 		<p><input type="submit" value="Submit"></p>
 	</form>
 {% endblock %}
