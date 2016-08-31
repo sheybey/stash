@@ -1,6 +1,5 @@
-{% set root = app.config["APPLICATION_ROOT"] %}
 {% macro style(name) -%}
-	<link rel="stylesheet" type="text/css" href="{{ root }}static/css/{{ name }}.css">
+	<link rel="stylesheet" type="text/css" href="{{ request.script_root }}/static/css/{{ name }}.css">
 {%- endmacro %}
 <!DOCTYPE html>
 <html>
@@ -14,6 +13,13 @@
 </head>
 <body>
 	<div class="container">
+		<header>
+			{% if session.get("logged_in", False) %}
+				<a href="{{ url_for('logout') }}">Log out</a>
+			{% elif %}
+				<a href="{{ url_for('login') }}">Log in</a>
+			{% endif %}
+		</header>
 		{% block content %}{% endblock %}
 	</div>
 </body>
