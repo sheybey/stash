@@ -1,9 +1,9 @@
-{% extends "base.html" %}
+{% from "base.html" import root %}
 {% block title %}Login{% endblock %}
 {% block content %}
 	<p>{{ secret }}</p>
-	<form action="{{ request.path }}" method="POST">
-		<p><textarea name="signature"></textarea></p>
+	<form action="login" method="POST">
+		<p><textarea rows="80" name="signature" required></textarea></p>
 		<p><input type="submit" value="Submit"></p>
 	</form>
 {% endblock %}

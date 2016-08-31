@@ -5,3 +5,11 @@ body {
 	font-size: 14pt;
 	line-height: 1.5;	
 }
+
+header a {
+	float: right;
+}
+
+textarea {
+	width: 100%;
+}

@@ -1,5 +1,5 @@
 {% macro style(name) -%}
-	<link rel="stylesheet" type="text/css" href="{{ request.script_root }}/static/css/{{ name }}.css">
+	<link rel="stylesheet" type="text/css" href="static/css/{{ name }}.css">
 {%- endmacro %}
 <!DOCTYPE html>
 <html>
@@ -14,10 +14,11 @@
 <body>
 	<div class="container">
 		<header>
+			Sam's stash
 			{% if session.get("logged_in", False) %}
-				<a href="{{ request.script_root }}/logout">Log out</a>
+				<a href="logout">Log out</a>
 			{% else %}
-				<a href="{{ request.script_root }}/login">Log in</a>
+				<a href="login">Log in</a>
 			{% endif %}
 		</header>
 		{% block content %}{% endblock %}
