@@ -3,8 +3,6 @@
 {% block content %}
 	{% for cat, msg in get_flashed_messages(True) %}
 		<p class="{{ cat }}">{{ msg }}</p>
-	{% else %}
-		<p>no messages</p>
 	{% endfor %}
 	<p>{{ secret }}</p>
 	<form action="login" method="POST">

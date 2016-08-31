@@ -18,3 +18,10 @@ textarea {
 	width: 100%;
 	height: 400px;
 }
+
+.error {
+	color: #DD0000;
+	border: 2px dashed #FF0000;
+	border-radius: 5px;
+	padding: .5em;
+}

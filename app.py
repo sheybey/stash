@@ -21,9 +21,9 @@ def index():
 @app.route("/login", methods=["GET", "POST"])
 def login():
 	if request.method == "GET":
-		md5 = hashlib.md5()
-		md5.update(os.urandom(32))
-		secret = md5.hexdigest()
+		sha1 = hashlib.sha1()
+		sha1.update(os.urandom(32))
+		secret = sha1.hexdigest()
 		session["secret"] = secret
 		return render_template("login.html", secret=secret)
 
