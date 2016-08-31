@@ -16,7 +16,7 @@
 		<header>
 			{% if session.get("logged_in", False) %}
 				<a href="{{ request.script_root }}/logout">Log out</a>
-			{% elif %}
+			{% else %}
 				<a href="{{ request.script_root }}/login">Log in</a>
 			{% endif %}
 		</header>
