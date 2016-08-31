@@ -20,8 +20,10 @@ textarea {
 }
 
 .error {
-	color: #DD0000;
-	border: 2px dashed #FF0000;
-	border-radius: 5px;
+	background-image: linear-gradient(45deg, #F66, #F66 15px, #FAA 15px, #FAA 30px);
+	border-radius: 10px;
 	padding: .5em;
+}
+.error a {
+	float: right;
 }

@@ -1,6 +1,9 @@
 {% macro style(name) -%}
 	<link rel="stylesheet" type="text/css" href="static/css/{{ name }}.css">
 {%- endmacro %}
+{% macro script(name) -%}
+	<script type="application/javascript" src="static/js/{{ name }}.js"></script>
+{%- endmacro %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,6 +12,7 @@
 	<meta charset="utf-8">
 	{{ style('skeleton') }}
 	{{ style('base') }}
+	{{ script('error') }}
 	{% endblock head %}
 </head>
 <body>
