@@ -1,5 +1,6 @@
 from flask import Flask, url_for, request, session, render_template
 import hashlib
+import os
 app = Flask(__name__)
 
 class DefaultConfiguration():
