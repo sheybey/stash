@@ -1,4 +1,4 @@
-from flask import Flask, url_for
+from flask import Flask, url_for, session, render_template
 app = Flask(__name__)
 
 class DefaultConfiguration():
@@ -9,4 +9,4 @@ app.config.from_pyfile("app.cfg", silent=True)
 
 @app.route("/")
 def index():
-	return repr(app.config["APPLICATION_ROOT"])
+	return render_template("index.html")
