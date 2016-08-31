@@ -1,5 +1,4 @@
-from flask import Flask, url_for, request, session, render_template, redirect,
-	flash, get_flashed_messages
+from flask import Flask, url_for, request, session, render_template, redirect, flash, get_flashed_messages
 import hashlib
 import os
 import gnupg
