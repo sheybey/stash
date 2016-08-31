@@ -9,4 +9,4 @@ app.config.from_pyfile("app.cfg", silent=True)
 
 @app.route("/")
 def index():
-	return render_template("index.html")
+	return render_template("index.html", app=app)
