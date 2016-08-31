@@ -20,10 +20,12 @@ textarea {
 }
 
 .error {
-	background-image: linear-gradient(45deg, #F66, #F66 15px, #FAA 15px, #FAA 30px);
+	background-image: repeating-linear-gradient(45deg, #F66, #F66 15px, #FAA 15px, #FAA 30px);
 	border-radius: 10px;
-	padding: .5em;
+	padding: .25em .5em;
 }
 .error a {
 	float: right;
+	text-decoration: none;
+	color: #333;
 }
