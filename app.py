@@ -1,13 +1,14 @@
 from flask import Flask, url_for, request, session, render_template, redirect, flash, get_flashed_messages
-import hashlib
 import os
 import gnupg
+import hashlib
 import tempfile
 app = Flask(__name__)
 
 class DefaultConfiguration():
 	APPLICATION_ROOT = "/"
 	SECRET_KEY = "hello"
+	UPLOAD_DIR = "uploads"
 
 app.config.from_object(DefaultConfiguration)
 app.config.from_pyfile("app.cfg", silent=True)
@@ -40,8 +41,7 @@ def login():
 		with open(signature_filename, "w") as signature:
 			signature.write(request.form["signature"].encode("ascii"))
 		gpg = gnupg.GPG()
-		verified = gpg.verify_data(signature_filename, secret)
-		if not verified:
+		if not gpg.verify_data(signature_filename, secret):
 			flash("Could not verify signature", "error")
 			return redirect(url_for("login"))
 		session["logged_in"] = True
@@ -51,11 +51,18 @@ def login():
 		flash("Invalid signature", "error")
 		return redirect(url_for("login"))
 	finally:
-		os.unlink(signature_filename)
-	
-
+		if os.name != "nt":
+			os.unlink(signature_filename)
 
 @app.route("/logout")
 def logout():
 	session["logged_in"] = False
 	return redirect(url_for("index"))
+
+@app.route("/upload", methods=["GET", "POST"])
+def upload():
+	if "logged_in" not in session or not session["logged_in"]:
+		return redirect(url_for("login"))
+	if request.method == "GET":
+		return render_template("upload.html")
+

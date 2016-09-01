@@ -10,6 +10,7 @@
 	{% block head %}
 	<title>{% block title %}{% endblock %}</title>
 	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	{{ style('skeleton') }}
 	{{ style('base') }}
 	{{ script('error') }}
@@ -19,11 +20,13 @@
 	<div class="container">
 		<header>
 			<a href="./">Sam's stash</a>
-			{% if session.get("logged_in", False) %}
-				<a href="logout">Log out</a>
-			{% else %}
-				<a href="login">Log in</a>
-			{% endif %}
+			<span class="right">
+				{% if session.get("logged_in", False) %}
+					<a href="upload">Upload</a> <a href="logout">Log out</a>
+				{% else %}
+					<a href="login">Log in</a>
+				{% endif %}
+			</span>
 		</header>
 		{% block content %}{% endblock %}
 	</div>

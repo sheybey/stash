@@ -1,0 +1,13 @@
+#droptarget {
+	padding: 2em;
+	text-align: center;
+	border: 2px dashed #CCC;
+	border-radius: 5px;
+	transition-property: border-color;
+	transition-duration: .5s;
+	transition-timing-function: ease-out;
+}
+
+#droptarget.dragover {
+	border-color: #333;
+}

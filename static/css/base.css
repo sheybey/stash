@@ -10,22 +10,22 @@ header {
 	margin: 2em 0;
 	font-size: 120%;
 }
-header a:last-child {
+
+.right {
 	float: right;
 }
-
-textarea {
-	width: 100%;
-	height: 400px;
+.hidden {
+	display: none;
 }
 
 .error {
-	background-image: repeating-linear-gradient(45deg, #F66, #F66 15px, #FAA 15px, #FAA 30px);
-	border-radius: 10px;
+	background-image: repeating-linear-gradient(45deg, #F33, #F33 15px, #F66 15px, #F66 30px);
+	border-radius: 6px;
 	padding: .25em .5em;
+	color: white;
 }
 .error a {
 	float: right;
 	text-decoration: none;
-	color: #333;
+	color: inherit;
 }

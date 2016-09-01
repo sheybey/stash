@@ -1,5 +1,10 @@
 {% extends "base.html" %}
+{% from "base.html" import style %}
 {% block title %}Log in{% endblock %}
+{% block head %}
+	{{ super() }}
+	{{ style('login') }}
+{% endblock %}
 {% block content %}
 	{% for cat, msg in get_flashed_messages(True) %}
 		<p class="{{ cat }}">{{ msg }}</p>
