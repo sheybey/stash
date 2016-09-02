@@ -33,6 +33,9 @@ def index():
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
+	if "logged_in" in session and session["logged_in"]:
+		return redirect(url_for("index"))
+
 	if request.method == "GET":
 		sha1 = hashlib.sha1()
 		sha1.update(os.urandom(32))
