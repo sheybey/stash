@@ -23,6 +23,48 @@ document.addEventListener("DOMContentLoaded", function () {
 	droptarget.classList.remove("hidden");
 	textwithbrowse(droptarget, "Drop a file here or", "to upload it");
 
+	function upload(file) {
+		var form, xhr, progress, cancel;
+
+		function error() {
+			textwithbrowse(droptarget, "Failed. Drop a file or", "to try again");
+		}
+
+		if (running) {
+			return;
+		}
+		running = true;
+
+		form = new FormData();
+		xhr = new XMLHttpRequest();
+		progress = document.createElement("progress");
+		cancel = document.createElement("button");
+
+		form.append(file);
+		cancel.textContent = "Cancel";
+		cancel.addEventListener("click", function () {
+			xhr.abort();
+		});
+		progress.max = file.size;
+		droptarget.textContent = "";
+		droptarget.appendChild(progress);
+		droptarget.appendChild(cancel);
+
+		xhr.addEventListener("progress", function (event) {
+			progress.value = event.loaded;
+		});
+		xhr.addEventListener("load", function () {
+			textwithbrowse(droptarget, "Finished. Drop or", "to upload another file");
+		});
+		xhr.addEventListener("abort", error);
+		xhr.addEventListener("error", error);
+		xhr.addEventListener("loadend", function () {
+			running = false;
+		});
+		xhr.open("POST", "upload");
+		xhr.send(form);
+	}
+
 	droptarget.addEventListener("dragover", function (event) {
 		event.stopPropagation();
 		event.preventDefault();
@@ -47,5 +89,9 @@ document.addEventListener("DOMContentLoaded", function () {
 			upload(event.dataTransfer.files[0]);
 		}
 	});
-
+	input.addEventListener("change", function () {
+		if (!running && input.files[0]) {
+			upload(input.files[0]);
+		}
+	});
 });

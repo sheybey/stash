@@ -11,3 +11,14 @@
 #droptarget.dragover {
 	border-color: #333;
 }
+
+progress {
+	width: 100%;
+	height: 1em;
+	display: block;
+}
+
+#droptarget button {
+	width: 100%;
+	display: block;
+}

@@ -1,4 +1,6 @@
-from flask import Flask, url_for, request, session, render_template, redirect, flash, get_flashed_messages
+from flask import Flask, url_for, request, session, render_template, \
+	redirect, flash, get_flashed_messages
+from werkzeug.utils import secure_filename
 import os
 import gnupg
 import hashlib
@@ -8,16 +10,24 @@ app = Flask(__name__)
 class DefaultConfiguration():
 	APPLICATION_ROOT = "/"
 	SECRET_KEY = "hello"
-	UPLOAD_DIR = "uploads"
+	UPLOAD_DIR = os.path.join(Flask.root_path, "uploads")
 
 app.config.from_object(DefaultConfiguration)
 app.config.from_pyfile("app.cfg", silent=True)
 
 app.secret_key = app.config["SECRET_KEY"]
+if not os.path.isdir(app.config["UPLOAD_DIR"]):
+	os.makedirs(app.config["UPLOAD_DIR"], 0o755)
 
 @app.route("/")
 def index():
-	return render_template("index.html")
+	return render_template("index.html", files=[
+		{
+			"name": name,
+			"size": round(os.stat(name).st_size / 1024.0, 2)
+		}
+		for name in os.listdir(app.config["UPLOAD_DIR"])
+	])
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -66,3 +76,11 @@ def upload():
 	if request.method == "GET":
 		return render_template("upload.html")
 
+	if "file" not in request.files:
+		return redirect(url_for("login"))
+
+	f = request.files["file"]
+	name = secure_filename(f.filename)
+	f.save(os.path.join(app.config["UPLOAD_DIR"], name))
+
+	return redirect(url_for("index"))

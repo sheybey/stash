@@ -2,4 +2,9 @@
 {% block title %}Files{% endblock %}
 {% block content %}
 	<p>Hello.</p>
+	{% for file in files %}
+		<div class="file"><p>{{ file['name'] }} ({{ file['size'] }} KiB)</p></div>
+	{% else %}
+		<p>No files uploaded.</p>
+	{% endfor %}
 {% endblock %}
