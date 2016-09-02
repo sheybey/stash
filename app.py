@@ -10,7 +10,7 @@ app = Flask(__name__)
 class DefaultConfiguration():
 	APPLICATION_ROOT = "/"
 	SECRET_KEY = "hello"
-	UPLOAD_DIR = os.path.join(Flask.root_path, "uploads")
+	UPLOAD_DIR = os.path.join(app.root_path, "uploads")
 
 app.config.from_object(DefaultConfiguration)
 app.config.from_pyfile("app.cfg", silent=True)
@@ -24,7 +24,9 @@ def index():
 	return render_template("index.html", files=[
 		{
 			"name": name,
-			"size": round(os.stat(name).st_size / 1024.0, 2)
+			"size": round(os.stat(
+				os.path.join(app.config["UPLOAD_DIR"], name)
+			).st_size / 1024.0, 2)
 		}
 		for name in os.listdir(app.config["UPLOAD_DIR"])
 	])

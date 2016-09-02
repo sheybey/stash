@@ -40,7 +40,7 @@ document.addEventListener("DOMContentLoaded", function () {
 		progress = document.createElement("progress");
 		cancel = document.createElement("button");
 
-		form.append(file);
+		form.append("file", file);
 		cancel.textContent = "Cancel";
 		cancel.addEventListener("click", function () {
 			xhr.abort();
