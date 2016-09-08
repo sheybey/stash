@@ -10,11 +10,10 @@
 	{% for cat, msg in get_flashed_messages(True) %}
 		<p class="{{ cat }}">{{ msg }}</p>
 	{% endfor %}
-	<p>{{ secret }}</p>
 	<form action="upload" method="POST">
 		<div>
 			<p><input id="file" type="file" name="file"></p>
-			<p><input type="submit" value="Submit"></p>
+			<p><input type="submit" value="Upload" class="button-primary"></p>
 		</div>
 		<div id="droptarget" class="hidden"></div>
 	</form>

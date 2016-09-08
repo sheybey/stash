@@ -9,9 +9,9 @@
 	{% for cat, msg in get_flashed_messages(True) %}
 		<p class="{{ cat }}">{{ msg }}</p>
 	{% endfor %}
-	<p>{{ secret }}</p>
+	<p id="secret">{{ secret }}</p>
 	<form action="login" method="POST">
 		<p><textarea name="signature" required></textarea></p>
-		<p><input type="submit" value="Submit"></p>
+		<p><input type="submit" value="Submit" class="button-primary"></p>
 	</form>
 {% endblock %}

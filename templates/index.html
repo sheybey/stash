@@ -1,9 +1,14 @@
 {% extends "base.html" %}
 {% block title %}Files{% endblock %}
 {% block content %}
-	<p>Hello.</p>
 	{% for file in files %}
-		<div class="file"><p>{{ file['name'] }} ({{ file['size'] }} KiB)</p></div>
+		<div class="file">
+			<p>{{ file['name'] }} ({{ file['size'] }} KiB)</p>
+			<p>
+				<a class="button button-primary" href="{{ url_for('download', name=file['name']) }}">Download</a>
+				<a class="button button-danger" href="{{ url_for('delete', name=file['name']) }}">Delete</a>
+			</p>
+		</div>
 	{% else %}
 		<p>No files uploaded.</p>
 	{% endfor %}

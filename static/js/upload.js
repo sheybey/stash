@@ -43,22 +43,22 @@ document.addEventListener("DOMContentLoaded", function () {
 		form.append("file", file);
 		cancel.textContent = "Cancel";
 		cancel.addEventListener("click", function () {
-			xhr.abort();
+			xhr.upload.abort();
 		});
 		progress.max = file.size;
 		droptarget.textContent = "";
 		droptarget.appendChild(progress);
 		droptarget.appendChild(cancel);
 
-		xhr.addEventListener("progress", function (event) {
+		xhr.upload.addEventListener("progress", function (event) {
 			progress.value = event.loaded;
 		});
-		xhr.addEventListener("load", function () {
+		xhr.upload.addEventListener("load", function () {
 			textwithbrowse(droptarget, "Finished. Drop or", "to upload another file");
 		});
-		xhr.addEventListener("abort", error);
-		xhr.addEventListener("error", error);
-		xhr.addEventListener("loadend", function () {
+		xhr.upload.addEventListener("abort", error);
+		xhr.upload.addEventListener("error", error);
+		xhr.upload.addEventListener("loadend", function () {
 			running = false;
 		});
 		xhr.open("POST", "upload");

@@ -29,3 +29,14 @@ header {
 	text-decoration: none;
 	color: inherit;
 }
+
+.button.button-danger {
+	color: white;
+	background-color: #f33;
+	border-color: #f33;
+}
+
+.button.button-danger:hover {
+	background-color: #c33;
+	border-color: #c33;
+}

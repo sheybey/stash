@@ -74,6 +74,19 @@ def logout():
 	session["logged_in"] = False
 	return redirect(url_for("index"))
 
+@app.route("/delete/<name>")
+def delete(name):
+	if "logged_in" not in session or not session["logged_in"]:
+		return redirect(url_for("login"))
+	f = os.path.join(app.config["UPLOAD_DIR"], name)
+	if os.path.isfile(f):
+		os.unlink(f)
+	return redirect(url_for("index"))
+
+@app.route("/download/<name>")
+def download(name):
+	return "name"
+
 @app.route("/upload", methods=["GET", "POST"])
 def upload():
 	if "logged_in" not in session or not session["logged_in"]:
