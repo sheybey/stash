@@ -21,14 +21,26 @@ app.secret_key = app.config["SECRET_KEY"]
 if not os.path.isdir(app.config["UPLOAD_DIR"]):
 	os.makedirs(app.config["UPLOAD_DIR"], 0o755)
 
+def human_size(size):
+	k = 1024.0
+	m = k * 1024
+	g = m * 1024
+	if size > g:
+		return "{} GiB".format(round(size / g, 2))
+	if size > m:
+		return "{} MiB".format(round(size / m, 2))
+	if size > k:
+		return "{} KiB".format(round(size / k, 2))
+	return "{} bytes".format(size)
+
 @app.route("/")
 def index():
 	return render_template("index.html", files=[
 		{
 			"name": name,
-			"size": round(os.stat(
+			"size": human_size(os.stat(
 				os.path.join(app.config["UPLOAD_DIR"], name)
-			).st_size / 1024.0, 2)
+			).st_size)
 		}
 		for name in os.listdir(app.config["UPLOAD_DIR"])
 		if name not in app.config["PROTECTED_NAMES"]

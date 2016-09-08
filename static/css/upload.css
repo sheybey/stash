@@ -15,11 +15,11 @@
 progress {
 	width: 70%;
 	height: 1em;
-	display: block;
+	display: inline-block;
 }
 
 #droptarget button {
-	width: 25%;
-	display: block;
+	width: 23%;
+	display: inline-block;
 	margin-left: 5%;
 }

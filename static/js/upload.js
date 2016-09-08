@@ -42,8 +42,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
 		form.append("file", file);
 		cancel.textContent = "Cancel";
-		cancel.addEventListener("click", function () {
-			xhr.upload.abort();
+		cancel.classList.add("button-danger")
+		cancel.addEventListener("click", function (event) {
+			event.preventDefault();
+			event.stopPropagation();
+			xhr.abort();
 		});
 		progress.max = file.size;
 		droptarget.textContent = "";

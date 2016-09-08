@@ -3,7 +3,7 @@
 {% block content %}
 	{% for file in files %}
 		<div class="file">
-			<p>{{ file['name'] }} ({{ file['size'] }} KiB)</p>
+			<p>{{ file['name'] }} ({{ file['size'] }})</p>
 			<p>
 				<a class="button button-primary" href="{{ url_for('download', name=file['name']) }}">Download</a>
 				{% if session.get("logged_in", False) %}
