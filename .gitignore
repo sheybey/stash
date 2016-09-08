@@ -6,3 +6,4 @@
 pip*
 app.cfg
 uploads/*
+!uploads/.htaccess

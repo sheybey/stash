@@ -7,15 +7,15 @@ HTMLCollection.prototype.forEach = function (callback) {
 
 document.addEventListener("DOMContentLoaded", function () {
 	"use strict";
-	document.getElementsByClassName("error").forEach(function (element) {
-		closebutton = document.createElement("a");
+	document.getElementsByClassName("error").forEach(function (error) {
+		var closebutton = document.createElement("a");
 		closebutton.textContent = "\u00d7";
 		closebutton.href = "#";
 		closebutton.addEventListener("click", function (event) {
 			event.preventDefault();
 			event.stopPropagation();
-			element.parentNode.removeChild(element);
+			error.parentNode.removeChild(error);
 		});
-		element.appendChild(closebutton);
+		error.appendChild(closebutton);
 	});
 });

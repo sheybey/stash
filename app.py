@@ -1,5 +1,6 @@
 from flask import Flask, url_for, request, session, render_template, \
 	redirect, flash, get_flashed_messages
+from flask.helpers import send_from_directory
 from werkzeug.utils import secure_filename
 import os
 import gnupg
@@ -85,7 +86,10 @@ def delete(name):
 
 @app.route("/download/<name>")
 def download(name):
-	return "name"
+	if os.path.isfile(os.path.join(app.config['UPLOAD_DIR'], name)):
+		return send_from_directory(app.config['UPLOAD_DIR'],
+			name, as_attachment=True)
+	return "No such file", 404
 
 @app.route("/upload", methods=["GET", "POST"])
 def upload():
@@ -95,10 +99,14 @@ def upload():
 		return render_template("upload.html")
 
 	if "file" not in request.files:
-		return redirect(url_for("login"))
+		flash("No file uploaded", "error")
+		return redirect(url_for("upload"))
 
 	f = request.files["file"]
 	name = secure_filename(f.filename)
+	if len(name) == 0:
+		flash("No file uploaded", "error")
+		return redirect(url_for("upload"))
 	f.save(os.path.join(app.config["UPLOAD_DIR"], name))
 
 	return redirect(url_for("index"))
