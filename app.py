@@ -12,6 +12,7 @@ class DefaultConfiguration():
 	APPLICATION_ROOT = "/"
 	SECRET_KEY = "hello"
 	UPLOAD_DIR = os.path.join(app.root_path, "uploads")
+	PROTECTED_NAMES = [".htaccess"]
 
 app.config.from_object(DefaultConfiguration)
 app.config.from_pyfile("app.cfg", silent=True)
@@ -30,11 +31,12 @@ def index():
 			).st_size / 1024.0, 2)
 		}
 		for name in os.listdir(app.config["UPLOAD_DIR"])
+		if name not in app.config["PROTECTED_NAMES"]
 	])
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
-	if "logged_in" in session and session["logged_in"]:
+	if session.get("logged_in", False):
 		return redirect(url_for("index"))
 
 	if request.method == "GET":
@@ -77,7 +79,7 @@ def logout():
 
 @app.route("/delete/<name>")
 def delete(name):
-	if "logged_in" not in session or not session["logged_in"]:
+	if not session.get("logged_in", False):
 		return redirect(url_for("login"))
 	f = os.path.join(app.config["UPLOAD_DIR"], name)
 	if os.path.isfile(f):
@@ -86,14 +88,15 @@ def delete(name):
 
 @app.route("/download/<name>")
 def download(name):
-	if os.path.isfile(os.path.join(app.config['UPLOAD_DIR'], name)):
+	if os.path.isfile(os.path.join(app.config['UPLOAD_DIR'], name)) and \
+		name not in app.config["PROTECTED_NAMES"]:
 		return send_from_directory(app.config['UPLOAD_DIR'],
 			name, as_attachment=True)
 	return "No such file", 404
 
 @app.route("/upload", methods=["GET", "POST"])
 def upload():
-	if "logged_in" not in session or not session["logged_in"]:
+	if not session.get("logged_in", False):
 		return redirect(url_for("login"))
 	if request.method == "GET":
 		return render_template("upload.html")
@@ -104,9 +107,14 @@ def upload():
 
 	f = request.files["file"]
 	name = secure_filename(f.filename)
+
 	if len(name) == 0:
 		flash("No file uploaded", "error")
 		return redirect(url_for("upload"))
-	f.save(os.path.join(app.config["UPLOAD_DIR"], name))
 
+	if name in app.config["PROTECTED_NAMES"]:
+		flash("Invalid filename", "error")
+		return redirect(url_for("upload"))
+
+	f.save(os.path.join(app.config["UPLOAD_DIR"], name))
 	return redirect(url_for("index"))

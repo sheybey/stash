@@ -6,7 +6,9 @@
 			<p>{{ file['name'] }} ({{ file['size'] }} KiB)</p>
 			<p>
 				<a class="button button-primary" href="{{ url_for('download', name=file['name']) }}">Download</a>
-				<a class="button button-danger" href="{{ url_for('delete', name=file['name']) }}">Delete</a>
+				{% if session.get("logged_in", False) %}
+					<a class="button button-danger" href="{{ url_for('delete', name=file['name']) }}">Delete</a>
+				{% endif %}
 			</p>
 		</div>
 	{% else %}
