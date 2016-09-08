@@ -10,7 +10,7 @@
 	{% for cat, msg in get_flashed_messages(True) %}
 		<p class="{{ cat }}">{{ msg }}</p>
 	{% endfor %}
-	<form action="upload" method="POST" enctype="multipart/form-data">
+	<form action="{{ url_for('upload') }}" method="POST" enctype="multipart/form-data">
 		<div>
 			<p><input id="file" type="file" name="file"></p>
 			<p><input type="submit" value="Upload" class="button-primary"></p>

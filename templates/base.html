@@ -1,8 +1,8 @@
 {% macro style(name) -%}
-	<link rel="stylesheet" type="text/css" href="static/css/{{ name }}.css">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/{}.css'.format(name)) }}">
 {%- endmacro %}
 {% macro script(name) -%}
-	<script type="application/javascript" src="static/js/{{ name }}.js"></script>
+	<script type="application/javascript" src="{{ url_for('static', filename='js/{}.js'.format(name)) }}"></script>
 {%- endmacro %}
 <!DOCTYPE html>
 <html>
@@ -19,12 +19,12 @@
 <body>
 	<div class="container">
 		<header>
-			<a href="./">Sam's stash</a>
+			<a href="{{ url_for('index') }}">Sam's stash</a>
 			<span class="right">
 				{% if session.get("logged_in", False) %}
-					<a href="upload">Upload</a> <a href="logout">Log out</a>
+					<a href="{{ url_for('upload') }}">Upload</a> <a href="{{ url_for('logout') }}">Log out</a>
 				{% else %}
-					<a href="login">Log in</a>
+					<a href="{{ url_for('login') }}">Log in</a>
 				{% endif %}
 			</span>
 		</header>
