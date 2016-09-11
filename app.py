@@ -10,7 +10,6 @@ import tempfile
 app = Flask(__name__)
 
 class DefaultConfiguration(object):
-	APPLICATION_ROOT = "/"
 	SECRET_KEY = "hello"
 	UPLOAD_DIR = os.path.join(app.root_path, "uploads")
 	PROTECTED_NAMES = [".htaccess"]
