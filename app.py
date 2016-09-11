@@ -1,6 +1,5 @@
 from flask import Flask, url_for, request, session, render_template, \
-	redirect, flash, get_flashed_messages
-from flask.helpers import send_from_directory
+	redirect, flash, get_flashed_messages, send_from_directory
 from werkzeug.utils import secure_filename
 import os
 import gnupg
