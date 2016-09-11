@@ -6,9 +6,10 @@ import os
 import gnupg
 import hashlib
 import tempfile
+
 app = Flask(__name__)
 
-class DefaultConfiguration():
+class DefaultConfiguration(object):
 	APPLICATION_ROOT = "/"
 	SECRET_KEY = "hello"
 	UPLOAD_DIR = os.path.join(app.root_path, "uploads")
@@ -66,9 +67,9 @@ def login():
 	if secret is None:
 		return redirect(url_for("login"))
 
-	signature_filename = tempfile.mkstemp()[1]
+	signature_fd, signature_filename = tempfile.mkstemp()
 	try:
-		with open(signature_filename, "w") as signature:
+		with os.fdopen(signature_fd, "w") as signature:
 			signature.write(request.form["signature"].encode("ascii"))
 		gpg = gnupg.GPG()
 		if not gpg.verify_data(signature_filename, secret):
@@ -81,8 +82,9 @@ def login():
 		flash("Invalid signature", "error")
 		return redirect(url_for("login"))
 	finally:
-		if os.name != "nt":
-			os.unlink(signature_filename)
+		try: os.close(signature_fd)
+		except OSError: pass
+		finally: os.unlink(signature_filename)
 
 @app.route("/logout")
 def logout():
