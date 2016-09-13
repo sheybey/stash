@@ -19,7 +19,8 @@ header {
 }
 
 .error {
-	background-image: repeating-linear-gradient(45deg, #F33, #F33 15px, #F66 15px, #F66 30px);
+	background-image: repeating-linear-gradient(
+		45deg, #F33, #F33 15px, #F66 15px, #F66 30px);
 	border-radius: 6px;
 	padding: .25em .5em;
 	color: white;
