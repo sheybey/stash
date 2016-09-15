@@ -3,7 +3,10 @@
 /include
 /lib
 /lib64
+/local
+/share
 pip*
 app.cfg
+app.wsgi
 uploads/*
 !uploads/.htaccess
