@@ -12,6 +12,7 @@ class DefaultConfiguration(object):
 	SECRET_KEY = "hello"
 	UPLOAD_DIR = os.path.join(app.root_path, "uploads")
 	PROTECTED_NAMES = [".htaccess"]
+	GNUPG_CONF = {}
 
 app.config.from_object(DefaultConfiguration)
 app.config.from_pyfile("app.cfg", silent=True)
@@ -69,7 +70,7 @@ def login():
 	try:
 		with os.fdopen(signature_fd, "w") as signature:
 			signature.write(request.form["signature"].encode("ascii"))
-		gpg = gnupg.GPG()
+		gpg = gnupg.GPG(**app.config["GNUPG_CONF"])
 		if not gpg.verify_data(signature_filename, secret):
 			flash("Could not verify signature", "error")
 			return redirect(url_for("login"))
