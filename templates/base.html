@@ -23,7 +23,7 @@
 <body>
 	<div class="container">
 		<header>
-			<a href="{{ url_for('index') }}">Sam's stash</a>
+			<a href="{{ url_for('index') }}">Stash</a>
 			<span class="right">
 				{% if session.get("logged_in", False) %}
 					<a href="{{ url_for('upload') }}">Upload</a> <a href="{{ url_for('logout') }}">Log out</a>
